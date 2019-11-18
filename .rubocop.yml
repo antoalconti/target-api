@@ -20,6 +20,9 @@ Metrics/AbcSize:
 Metrics/BlockLength:
   CountComments: false
   Max: 25
+  Exclude:
+    - config/**/*
+    - spec/**/*
 
 Metrics/BlockNesting:
   Max: 4
