@@ -8,6 +8,10 @@ RSpec.describe Topic, type: :model do
     it { should validate_uniqueness_of(:name) }
   end
 
+  describe 'associations' do
+    it { should have_many(:targets) }
+  end
+
   describe '.create' do
     it 'creates the topic' do
       expect { subject }.to change { Topic.count }.by(1)
