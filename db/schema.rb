@@ -10,9 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_191_118_151_439) do
+ActiveRecord::Schema.define(version: 20_191_119_162_900) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
+
+  create_table 'targets', force: :cascade do |t|
+    t.bigint 'topic_id', null: false
+    t.string 'title', null: false
+    t.integer 'radius', null: false
+    t.decimal 'latitude', null: false
+    t.decimal 'longitude', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['topic_id'], name: 'index_targets_on_topic_id'
+  end
 
   create_table 'topics', force: :cascade do |t|
     t.string 'name', null: false
@@ -20,4 +31,6 @@ ActiveRecord::Schema.define(version: 20_191_118_151_439) do
     t.datetime 'updated_at', null: false
     t.index ['name'], name: 'index_topics_on_name', unique: true
   end
+
+  add_foreign_key 'targets', 'topics'
 end
