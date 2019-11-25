@@ -23,6 +23,7 @@ Metrics/BlockLength:
   Exclude:
     - config/**/*
     - spec/**/*
+    - db/**/*
 
 Metrics/BlockNesting:
   Max: 4
@@ -45,6 +46,9 @@ Metrics/ModuleLength:
 
 Metrics/LineLength:
   Max: 100
+  Exclude:  
+    - config/initializers/**/*
+
   # To make it possible to copy or click on URIs in the code, we allow lines
   # containing a URI to be longer than Max.
   AllowURI: true

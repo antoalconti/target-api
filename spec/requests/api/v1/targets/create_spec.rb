@@ -1,12 +1,13 @@
 RSpec.describe 'POST /api/v1/Targets', type: :request do
   subject { post api_v1_targets_url, params: target_params, as: :json }
 
-  let(:topic) { create(:topic) }
+  let!(:topic) { create(:topic) }
+  let!(:user) { create(:user) }
 
   context 'when the request is valid' do
     let(:target_params) do
       {
-        'target': attributes_for(:target).merge(topic_id: topic.id)
+        target: attributes_for(:target, topic_id: topic.id, user_id: user.id)
       }
     end
 
@@ -15,6 +16,7 @@ RSpec.describe 'POST /api/v1/Targets', type: :request do
       expect(response.body).to include_json(
         target: {
           topic_id: topic.id,
+          user_id: user.id,
           title: target_params[:target][:title],
           radius: target_params[:target][:radius],
           longitude: target_params[:target][:longitude].to_s,
@@ -36,7 +38,7 @@ RSpec.describe 'POST /api/v1/Targets', type: :request do
   context 'when target params is missing' do
     let(:target_params) do
       {
-        'target': attributes_for(:target).except(:title).merge(topic_id: topic.id)
+        target: attributes_for(:target, topic_id: topic.id).except(:title)
       }
     end
 
@@ -58,7 +60,7 @@ RSpec.describe 'POST /api/v1/Targets', type: :request do
   context "when topic id doesn't exist" do
     let(:target_params) do
       {
-        'target': attributes_for(:target).merge(topic_id: 0)
+        target: attributes_for(:target).merge(topic_id: 0)
       }
     end
 

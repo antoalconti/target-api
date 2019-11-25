@@ -1,6 +1,7 @@
 FactoryBot.define do
   factory :target do
     topic
+    user
     title { Faker::Artist.name }
     radius { Faker::Number.within(range: 1..1000) }
     latitude { Faker::Address.latitude.round(11) }
