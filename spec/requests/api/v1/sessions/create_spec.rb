@@ -21,6 +21,7 @@ RSpec.describe 'POST /api/v1/users/sign_in', type: :request do
           email: user.email,
           provider: user.provider,
           full_name: user.full_name,
+          gender: user.gender,
           uid: user.uid
         }
       )
