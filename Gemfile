@@ -30,6 +30,9 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'jbuilder', '~> 2.9', '>= 2.9.1'
 
+gem 'devise', '~> 4.7', '>= 4.7.1'
+gem 'devise_token_auth', '~> 1.1', '>= 1.1.3'
+
 group :test do
   gem 'rspec-json_expectations', '~> 2.2'
   gem 'shoulda-matchers', '~> 4.1', '>= 4.1.2'

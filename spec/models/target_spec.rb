@@ -16,6 +16,7 @@ RSpec.describe Target, type: :model do
 
   describe 'associations' do
     it { should belong_to(:topic) }
+    it { should belong_to(:user) }
   end
 
   describe '.create' do

@@ -1,5 +1,6 @@
 class Target < ApplicationRecord
   belongs_to :topic
+  belongs_to :user
 
   validates :title, :radius, :latitude, :longitude, presence: true
   validates :radius, numericality: { greater_than: 0, less_than_or_equal_to: 1000 }
