@@ -1,5 +1,5 @@
 RSpec.describe 'POST /api/v1/Targets', type: :request do
-  subject { post api_v1_targets_url, params: target_params, as: :json }
+  subject { post api_v1_targets_url, params: target_params, headers: auth_headers, as: :json }
 
   let!(:topic) { create(:topic) }
   let!(:user) { create(:user) }
@@ -7,7 +7,7 @@ RSpec.describe 'POST /api/v1/Targets', type: :request do
   context 'when the request is valid' do
     let(:target_params) do
       {
-        target: attributes_for(:target, topic_id: topic.id, user_id: user.id)
+        target: attributes_for(:target, topic_id: topic.id)
       }
     end
 
@@ -72,6 +72,30 @@ RSpec.describe 'POST /api/v1/Targets', type: :request do
     it 'returns a bad request status' do
       subject
       expect(response).to have_http_status(:bad_request)
+    end
+
+    it 'does not create a target' do
+      expect { subject }.not_to change { Target.count }
+    end
+  end
+
+  context 'when the user is not authenticated' do
+    subject { post api_v1_targets_url, params: target_params, as: :json }
+
+    let(:target_params) do
+      {
+        target: attributes_for(:target).merge(topic_id: topic.id)
+      }
+    end
+
+    it 'returns the error messages as a json' do
+      subject
+      expect(response.body).to include_json(errors: [I18n.t('devise.failure.unauthenticated')])
+    end
+
+    it 'returns a unauthorized status' do
+      subject
+      expect(response).to have_http_status(:unauthorized)
     end
 
     it 'does not create a target' do

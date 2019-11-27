@@ -1,10 +1,12 @@
 RSpec.describe 'GET /api/v1/Targets/:id', type: :request do
-  subject { get api_v1_target_url(target_id), as: :json }
+  subject { get api_v1_target_url(param), headers: auth_headers, as: :json }
+
+  let!(:user) { create(:user) }
+  let(:topic) { create(:topic) }
 
   context 'when the request is valid' do
-    let(:topic) { create(:topic) }
     let(:target) { create(:target, topic: topic) }
-    let(:target_id) { target.id }
+    let(:param) { target.id }
 
     it 'returns the target as a json' do
       subject
@@ -26,7 +28,7 @@ RSpec.describe 'GET /api/v1/Targets/:id', type: :request do
   end
 
   context 'when the request is not valid' do
-    let(:target_id) { 'Invalid topic_id' }
+    let(:param) { 'Invalid topic_id' }
 
     it 'returns the error messages as a json' do
       subject
@@ -36,6 +38,26 @@ RSpec.describe 'GET /api/v1/Targets/:id', type: :request do
     it 'returns a not found status' do
       subject
       expect(response).to have_http_status(:not_found)
+    end
+  end
+
+  context 'when the user is not authenticated' do
+    subject { post api_v1_targets_url, params: target_params, as: :json }
+
+    let(:target_params) do
+      {
+        target: attributes_for(:target).merge(topic_id: topic.id)
+      }
+    end
+
+    it 'returns the error messages as a json' do
+      subject
+      expect(response.body).to include_json(errors: [I18n.t('devise.failure.unauthenticated')])
+    end
+
+    it 'returns a unauthorized status' do
+      subject
+      expect(response).to have_http_status(:unauthorized)
     end
   end
 end

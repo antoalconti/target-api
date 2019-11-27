@@ -4,7 +4,10 @@ module Api
       include Api::Concerns::ActAsApiRequest
       include DeviseTokenAuth::Concerns::SetUserByToken
 
+      before_action :authenticate_user!
+
       respond_to :json
+      layout false
 
       rescue_from Exception, with: :render_error
       rescue_from ActiveRecord::RecordInvalid, with: :render_record_invalid
