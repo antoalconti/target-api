@@ -16,7 +16,7 @@ RSpec.describe 'POST /api/v1/Targets', type: :request do
 
       it 'returns the target' do
         subject
-        expect(response.body).to include_json(
+        expect(json).to include_json(
           target: {
             topic_id: topic.id,
             user_id: user.id,
@@ -38,6 +38,61 @@ RSpec.describe 'POST /api/v1/Targets', type: :request do
       end
     end
 
+    context 'reach the limit of targets' do
+      let(:max) { Target::MAX_TARGET_LIMIT }
+      let(:target_params) do
+        {
+          target: attributes_for(:target, topic_id: topic.id)
+        }
+      end
+
+      context 'before to reach the limit' do
+        let!(:targets) { create_list(:target, max - 1, user: user) }
+
+        it 'returns the target' do
+          subject
+          expect(json).to include_json(
+            target: {
+              topic_id: topic.id,
+              user_id: user.id,
+              title: target_params[:target][:title],
+              radius: target_params[:target][:radius],
+              longitude: target_params[:target][:longitude].to_s,
+              latitude: target_params[:target][:latitude].to_s
+            }
+          )
+        end
+
+        it 'returns a created status' do
+          subject
+          expect(response).to be_successful
+        end
+
+        it 'creates a target' do
+          expect { subject }.to change { Target.count }.from(max - 1).to(max)
+        end
+      end
+
+      context 'when the limit is reached' do
+        let!(:targets) { create_list(:target, max, user: user) }
+
+        it 'returns the error messages as a json' do
+          subject
+          error = I18n.t('api.models.target.errors.reached_limit', max: max)
+          expect(json).to include_json(errors: { target: [error] })
+        end
+
+        it 'returns a bad request status' do
+          subject
+          expect(response).to have_http_status(:bad_request)
+        end
+
+        it 'does not create a target' do
+          expect { subject }.not_to change { Target.count }
+        end
+      end
+    end
+
     context 'when target params is missing' do
       let(:target_params) do
         {
@@ -47,7 +102,7 @@ RSpec.describe 'POST /api/v1/Targets', type: :request do
 
       it 'returns the error messages as a json' do
         subject
-        expect(response.body).to include_json(errors: { title: ['can\'t be blank'] })
+        expect(json).to include_json(errors: { title: ['can\'t be blank'] })
       end
 
       it 'returns a bad request status' do
@@ -69,7 +124,7 @@ RSpec.describe 'POST /api/v1/Targets', type: :request do
 
       it 'returns the error messages as a json' do
         subject
-        expect(response.body).to include_json(errors: { topic: ['must exist'] })
+        expect(json).to include_json(errors: { topic: ['must exist'] })
       end
 
       it 'returns a bad request status' do
@@ -89,7 +144,7 @@ RSpec.describe 'POST /api/v1/Targets', type: :request do
 
     it 'returns the error messages as a json' do
       subject
-      expect(response.body).to include_json(errors: [I18n.t('devise.failure.unauthenticated')])
+      expect(json).to include_json(errors: [I18n.t('devise.failure.unauthenticated')])
     end
 
     it 'returns a unauthorized status' do

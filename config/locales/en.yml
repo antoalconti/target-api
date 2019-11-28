@@ -6,3 +6,7 @@ en:
       invalid_content_type: 'Invalid content type header'
       invalid_credentials: 'Invalid login credentials. Please try again.'
       email_not_confirmed: "A confirmation email was sent to your account at '%{email}'. You must follow the instructions in the email before your account can be activated"
+    models:
+      target:
+        errors:
+          reached_limit: 'You reached the %{max} limit of targets! Delete one if you want to create another.'

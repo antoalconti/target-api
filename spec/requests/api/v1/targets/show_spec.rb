@@ -13,7 +13,7 @@ RSpec.describe 'GET /api/v1/Targets/:id', type: :request do
 
       it 'returns the target as a json' do
         subject
-        expect(response.body).to include_json(
+        expect(json).to include_json(
           target: {
             topic_id: topic.id,
             title: target.title,
@@ -35,7 +35,7 @@ RSpec.describe 'GET /api/v1/Targets/:id', type: :request do
 
       it 'returns the error messages as a json' do
         subject
-        expect(response.body).to include_json(error: 'Record not found')
+        expect(json).to include_json(error: 'Record not found')
       end
 
       it 'returns a not found status' do
@@ -51,7 +51,7 @@ RSpec.describe 'GET /api/v1/Targets/:id', type: :request do
 
     it 'returns the error messages as a json' do
       subject
-      expect(response.body).to include_json(errors: [I18n.t('devise.failure.unauthenticated')])
+      expect(json).to include_json(errors: [I18n.t('devise.failure.unauthenticated')])
     end
 
     it 'returns a unauthorized status' do
