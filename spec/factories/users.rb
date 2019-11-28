@@ -5,7 +5,6 @@ FactoryBot.define do
     password      { Faker::Internet.password(min_length: 8) }
     gender        { User.genders.values.sample }
     provider      { 'email' }
-    uid           { Faker::Internet.uuid }
     confirmed_at  { Time.zone.now }
 
     trait :not_confirmed do
