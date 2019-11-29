@@ -15,7 +15,7 @@ RSpec.describe 'POST /api/v1/users/sign_in', type: :request do
 
     it 'returns the user' do
       subject
-      expect(response.body).to include_json(
+      expect(json).to include_json(
         user: {
           id: user.id,
           email: user.email,
@@ -54,7 +54,7 @@ RSpec.describe 'POST /api/v1/users/sign_in', type: :request do
     it 'returns the error message' do
       subject
       error_msg = I18n.t('api.errors.invalid_credentials')
-      expect(response.body).to include_json(errors: [error_msg])
+      expect(json).to include_json(errors: [error_msg])
     end
 
     it 'returns a unauthorized status' do
@@ -78,7 +78,7 @@ RSpec.describe 'POST /api/v1/users/sign_in', type: :request do
     it 'returns the error message' do
       subject
       error_msg = I18n.t('api.errors.email_not_confirmed', email: user_not_confirmed.email)
-      expect(response.body).to include_json(errors: [error_msg])
+      expect(json).to include_json(errors: [error_msg])
     end
 
     it 'returns a unauthorized status' do
