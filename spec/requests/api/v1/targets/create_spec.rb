@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe 'POST /api/v1/Targets', type: :request do
   subject { post api_v1_targets_url, params: target_params, headers: headers, as: :json }
 

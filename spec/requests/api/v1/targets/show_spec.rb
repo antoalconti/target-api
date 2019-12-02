@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe 'GET /api/v1/Targets/:id', type: :request do
   subject { get api_v1_target_url(param), headers: headers, as: :json }
 

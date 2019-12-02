@@ -32,3 +32,5 @@ dump.rdb
 
 # Ignore metadata from .DS_STORE file
 .DS_STORE
+
+config/application.yml
