@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe 'POST /api/v1/users/sign_in', type: :request do
   subject { post user_session_url, params: user_params, as: :json }
 

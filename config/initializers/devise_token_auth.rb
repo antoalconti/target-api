@@ -1,5 +1,6 @@
 DeviseTokenAuth.setup do |config|
-  config.default_confirm_success_url = '/'
+  # This path redirect to user info, this controller is not implemented yet, will be in next PR.
+  config.default_confirm_success_url = '/api/v1/user'
   config.default_password_reset_url = ENV['PASSWORD_RESET_URL']
   config.enable_standard_devise_support = true
   config.token_lifespan = 2.years
