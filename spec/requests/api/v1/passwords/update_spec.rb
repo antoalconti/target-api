@@ -20,6 +20,7 @@ RSpec.describe 'PATCH /api/v1/users/password', type: :request do
     }
   end
 
+
   subject { patch user_password_url, params: params, headers: @headers, as: :json }
 
   context 'when the request is valid' do
