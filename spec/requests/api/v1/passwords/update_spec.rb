@@ -3,21 +3,24 @@ require 'rails_helper'
 RSpec.describe 'PATCH /api/v1/users/password', type: :request do
   let(:user) { create(:user) }
   let(:password_token) { user.send(:set_reset_password_token) }
-  let!(:headers) do
-    params = {
+  let(:get_params) do
+    {
       reset_password_token: password_token,
       redirect_url: ENV['PASSWORD_RESET_URL']
     }
-    get edit_user_password_path, params: params, headers: auth_headers
+  end
+
+  before do
+    get edit_user_password_path, params: get_params, headers: auth_headers
     edit_response_params = Addressable::URI.parse(response.header['Location']).query_values
-    {
+    @headers = {
       'access-token' => edit_response_params['token'],
       'uid' => edit_response_params['uid'],
       'client' => edit_response_params['client_id']
     }
   end
 
-  subject { patch user_password_url, params: params, headers: headers, as: :json }
+  subject { patch user_password_url, params: params, headers: @headers, as: :json }
 
   context 'when the request is valid' do
     let(:params) do
@@ -48,7 +51,8 @@ RSpec.describe 'PATCH /api/v1/users/password', type: :request do
   context 'when the request is not valid' do
     context 'when the user does not request reset password' do
       let(:params) { nil }
-      let(:headers) { nil }
+
+      before { @headers = nil }
 
       it 'returns the error messages as a json' do
         subject
