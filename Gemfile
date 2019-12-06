@@ -29,6 +29,7 @@ gem 'devise_token_auth', '~> 1.1', '>= 1.1.3'
 gem 'jbuilder', '~> 2.9', '>= 2.9.1'
 
 group :test do
+  gem 'addressable', '~> 2.7'
   gem 'rspec-json_expectations', '~> 2.2'
   gem 'shoulda-matchers', '~> 4.1', '>= 4.1.2'
 end
