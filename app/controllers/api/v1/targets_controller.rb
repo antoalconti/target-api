@@ -10,6 +10,10 @@ module Api
         @target = Target.find(params[:id])
       end
 
+      def index
+        @targets = current_user.targets
+      end
+
       private
 
       def target_params

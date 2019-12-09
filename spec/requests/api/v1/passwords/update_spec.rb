@@ -118,7 +118,7 @@ RSpec.describe 'PATCH /api/v1/users/password', type: :request do
         expect(json).to include_json(errors: { full_messages: [message] })
       end
 
-      it 'returns a unprocessable entity status' do
+      it 'returns an unprocessable entity status' do
         subject
         expect(response).to have_http_status(:unprocessable_entity)
       end
