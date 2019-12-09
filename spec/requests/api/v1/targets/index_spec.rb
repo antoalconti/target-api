@@ -1,28 +1,33 @@
 require 'rails_helper'
 
-RSpec.describe 'GET /api/v1/Targets/:id', type: :request do
-  subject { get api_v1_target_url(param), headers: headers, as: :json }
+RSpec.describe 'GET /api/v1/Targets', type: :request do
+  subject { get api_v1_targets_url, headers: headers, as: :json }
 
-  let!(:user) { create(:user) }
+  let(:user) { create(:user) }
   let(:topic) { create(:topic) }
-  let(:target) { create(:target, topic: topic) }
 
   context 'with logged-in user' do
     let(:headers) { auth_headers }
 
-    context 'when the request is valid' do
-      let(:param) { target.id }
+    context 'when the request is valid and the user has targets' do
+      let!(:targets) { create_list(:target, 5, user: user, topic: topic) }
+      let!(:other_targets) { create_list(:target, 4) }
 
-      it 'returns the target as a json' do
+      it 'returns the collection of targets as a json' do
         subject
-        expect(json).to include_json(
-          target: {
+        targets_collection = targets.map do |target|
+          {
             topic_id: topic.id,
+            user_id: user.id,
             title: target.title,
             radius: target.radius,
             longitude: target.longitude.to_s,
             latitude: target.latitude.to_s
           }
+        end
+
+        expect(json).to include_json(
+          targets: targets_collection
         )
       end
 
@@ -32,24 +37,21 @@ RSpec.describe 'GET /api/v1/Targets/:id', type: :request do
       end
     end
 
-    context 'when the request is not valid' do
-      let(:param) { 'Invalid topic_id' }
-
-      it 'returns the error messages as a json' do
+    context 'when the request is valid and the user has not targets' do
+      it 'returns empty targets collection' do
         subject
-        expect(json).to include_json(error: 'Record not found')
+        expect(json).to include_json(targets: [])
       end
 
-      it 'returns a not found status' do
+      it 'returns a success status' do
         subject
-        expect(response).to have_http_status(:not_found)
+        expect(response).to be_successful
       end
     end
   end
 
   context 'when the user is not authenticated' do
     let(:headers) { nil }
-    let(:param) { 0 }
 
     it 'returns the error messages as a json' do
       subject

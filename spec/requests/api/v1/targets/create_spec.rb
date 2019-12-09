@@ -149,7 +149,7 @@ RSpec.describe 'POST /api/v1/Targets', type: :request do
       expect(json).to include_json(errors: [I18n.t('devise.failure.unauthenticated')])
     end
 
-    it 'returns a unauthorized status' do
+    it 'returns an unauthorized status' do
       subject
       expect(response).to have_http_status(:unauthorized)
     end
