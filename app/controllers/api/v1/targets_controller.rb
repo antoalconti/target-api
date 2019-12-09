@@ -6,6 +6,11 @@ module Api
         render :show, status: :created
       end
 
+      def destroy
+        Target.destroy(params[:id])
+        render json: { message: I18n.t('api.models.target.deleted') }
+      end
+
       def show
         @target = Target.find(params[:id])
       end
