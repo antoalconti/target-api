@@ -1,30 +1,16 @@
 require 'rails_helper'
 
-RSpec.describe 'GET /api/v1/targets/:id', type: :request do
-  subject { get api_v1_target_url(param), headers: headers, as: :json }
+RSpec.describe 'DELETE /api/v1/targets/:id', type: :request do
+  subject { delete api_v1_target_url(param), headers: headers, as: :json }
 
   let!(:user) { create(:user) }
-  let(:topic) { create(:topic) }
-  let(:target) { create(:target, topic: topic) }
+  let(:target) { create(:target) }
 
   context 'with logged-in user' do
     let(:headers) { auth_headers }
 
     context 'when the request is valid' do
       let(:param) { target.id }
-
-      it 'returns the target as a json' do
-        subject
-        expect(json).to include_json(
-          target: {
-            topic_id: topic.id,
-            title: target.title,
-            radius: target.radius,
-            longitude: target.longitude.to_s,
-            latitude: target.latitude.to_s
-          }
-        )
-      end
 
       it 'returns a success status' do
         subject

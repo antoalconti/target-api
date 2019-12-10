@@ -8,7 +8,6 @@ module Api
 
       def destroy
         Target.destroy(params[:id])
-        render json: { message: I18n.t('api.models.target.deleted') }
       end
 
       def show

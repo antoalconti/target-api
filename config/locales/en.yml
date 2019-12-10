@@ -8,6 +8,5 @@ en:
       password_length: "Password is too short (minimum is 6 characters)"
     models:
       target:
-        deleted: 'Target was successfully deleted.' 
         errors:
           reached_limit: 'You reached the %{max} limit of targets! Delete one if you want to create another.'
