@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'GET /api/v1/Targets', type: :request do
+RSpec.describe 'GET /api/v1/targets', type: :request do
   subject { get api_v1_targets_url, headers: headers, as: :json }
 
   let(:user) { create(:user) }

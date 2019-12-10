@@ -6,6 +6,10 @@ module Api
         render :show, status: :created
       end
 
+      def destroy
+        Target.destroy(params[:id])
+      end
+
       def show
         @target = Target.find(params[:id])
       end
