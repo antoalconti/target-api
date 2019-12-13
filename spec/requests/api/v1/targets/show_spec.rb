@@ -5,7 +5,14 @@ RSpec.describe 'GET /api/v1/targets/:id', type: :request do
 
   let!(:user) { create(:user) }
   let(:topic) { create(:topic) }
-  let(:target) { create(:target, topic: topic) }
+  let(:target) do
+    create(:target, topic: topic,
+                    latitude: 34.905311, longitude: 56.185386, radius: 950)
+  end
+  let!(:matches_of_my_target) do
+    create_list(:target, 2, topic_id: topic.id,
+                            latitude: 34.905311, longitude: 56.185386, radius: 950)
+  end
 
   context 'with logged-in user' do
     let(:headers) { auth_headers }
@@ -13,8 +20,19 @@ RSpec.describe 'GET /api/v1/targets/:id', type: :request do
     context 'when the request is valid' do
       let(:param) { target.id }
 
-      it 'returns the target as a json' do
+      it 'returns the target and the target matches as a json' do
         subject
+        target_matches = TargetMatchingService.new(Target.last).matches
+        target_matches = target_matches.map do |target|
+          {
+            topic_id: target.topic.id,
+            user_id: target.user.id,
+            title: target.title,
+            radius: target.radius,
+            longitude: target.longitude.to_s,
+            latitude: target.latitude.to_s
+          }
+        end
         expect(json).to include_json(
           target: {
             topic_id: topic.id,
@@ -22,7 +40,8 @@ RSpec.describe 'GET /api/v1/targets/:id', type: :request do
             radius: target.radius,
             longitude: target.longitude.to_s,
             latitude: target.latitude.to_s
-          }
+          },
+          target_matches: target_matches
         )
       end
 

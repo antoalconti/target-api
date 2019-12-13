@@ -7,6 +7,7 @@ module Api
 
       def create
         @target = current_user.targets.create!(target_params)
+        @target_matches = TargetMatchingService.new(@target).matches
         render :show, status: :created
       end
 
@@ -16,6 +17,7 @@ module Api
 
       def show
         @target = Target.find(params[:id])
+        @target_matches = TargetMatchingService.new(@target).matches
       end
 
       def index

@@ -5,6 +5,10 @@ RSpec.describe 'POST /api/v1/targets', type: :request do
 
   let!(:topic) { create(:topic) }
   let!(:user) { create(:user) }
+  let!(:matches_of_my_target) do
+    create_list(:target, 2, topic_id: topic.id,
+                            latitude: 34.905311, longitude: 56.185386, radius: 950)
+  end
 
   context 'with logged-in user' do
     let(:headers) { auth_headers }
@@ -12,12 +16,26 @@ RSpec.describe 'POST /api/v1/targets', type: :request do
     context 'when the request is valid' do
       let(:target_params) do
         {
-          target: attributes_for(:target, topic_id: topic.id)
+          target: attributes_for(:target, topic_id: topic.id,
+                                          latitude: 34.905311, longitude: 56.185386)
         }
       end
 
-      it 'returns the target' do
+      it 'returns the target and the target matches' do
         subject
+        target_matches = TargetMatchingService.new(Target.last).matches
+        target_matches = target_matches.map do |target|
+          {
+            id: target.id,
+            topic_id: topic.id,
+            user_id: target.user_id,
+            title: target.title,
+            radius: target.radius,
+            longitude: target.longitude.to_s,
+            latitude: target.latitude.to_s
+          }
+        end
+
         expect(json).to include_json(
           target: {
             topic_id: topic.id,
@@ -26,7 +44,8 @@ RSpec.describe 'POST /api/v1/targets', type: :request do
             radius: target_params[:target][:radius],
             longitude: target_params[:target][:longitude].to_s,
             latitude: target_params[:target][:latitude].to_s
-          }
+          },
+          target_matches: target_matches
         )
       end
 
@@ -36,7 +55,7 @@ RSpec.describe 'POST /api/v1/targets', type: :request do
       end
 
       it 'creates a target' do
-        expect { subject }.to change { Target.count }.from(0).to(1)
+        expect { subject }.to change { Target.count }.from(2).to(3)
       end
     end
 
@@ -71,7 +90,7 @@ RSpec.describe 'POST /api/v1/targets', type: :request do
         end
 
         it 'creates a target' do
-          expect { subject }.to change { Target.count }.from(max - 1).to(max)
+          expect { subject }.to change { Target.where(user_id: user).count }.from(max - 1).to(max)
         end
       end
 

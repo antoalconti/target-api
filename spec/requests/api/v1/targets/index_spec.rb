@@ -26,8 +26,8 @@ RSpec.describe 'GET /api/v1/targets', type: :request do
           }
         end
 
-        expect(json).to include_json(
-          targets: targets_collection
+        expect(json[:targets]).to match_unordered_json(
+          targets_collection
         )
       end
 
