@@ -10,9 +10,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_191_203_155_817) do
+ActiveRecord::Schema.define(version: 20_191_216_163_643) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
+
+  create_table 'chats', force: :cascade do |t|
+    t.bigint 'user_a_id'
+    t.bigint 'user_b_id'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['user_a_id'], name: 'index_chats_on_user_a_id'
+    t.index ['user_b_id'], name: 'index_chats_on_user_b_id'
+  end
+
+  create_table 'messages', force: :cascade do |t|
+    t.bigint 'user_id', null: false
+    t.bigint 'chat_id', null: false
+    t.string 'text', null: false
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.index ['chat_id'], name: 'index_messages_on_chat_id'
+    t.index ['user_id'], name: 'index_messages_on_user_id'
+  end
 
   create_table 'targets', force: :cascade do |t|
     t.bigint 'topic_id', null: false
@@ -57,6 +76,10 @@ ActiveRecord::Schema.define(version: 20_191_203_155_817) do
     t.index ['uid', 'provider'], name: 'index_users_on_uid_and_provider', unique: true
   end
 
+  add_foreign_key 'chats', 'users', column: 'user_a_id'
+  add_foreign_key 'chats', 'users', column: 'user_b_id'
+  add_foreign_key 'messages', 'chats'
+  add_foreign_key 'messages', 'users'
   add_foreign_key 'targets', 'topics'
   add_foreign_key 'targets', 'users'
 end
