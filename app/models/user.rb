@@ -11,4 +11,8 @@ class User < ApplicationRecord
 
   validates :full_name, presence: true
   validates :gender, presence: true, inclusion: { in: genders.keys }
+
+  def chats
+    Chat.where(user_a_id: id).or(Chat.where(user_b_id: id))
+  end
 end

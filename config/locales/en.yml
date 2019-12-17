@@ -10,3 +10,6 @@ en:
       target:
         errors:
           reached_limit: 'You reached the %{max} limit of targets! Delete one if you want to create another.'
+      message:
+        errors:
+          chat_different_users: 'User must be the one of chat users'
