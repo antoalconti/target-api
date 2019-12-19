@@ -6,6 +6,7 @@ Rails.application.routes.draw do
     sessions: 'api/v1/sessions',
     passwords: 'api/v1/passwords'
   }
+  mount ActionCable.server => '/cable'
 
   namespace :api do
     namespace :v1 do
