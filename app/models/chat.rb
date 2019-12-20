@@ -6,4 +6,8 @@ class Chat < ApplicationRecord
   def users
     [user_a, user_b]
   end
+
+  def unread_messages_count(user)
+    messages.where(seen: false).where.not(user: user).count
+  end
 end
