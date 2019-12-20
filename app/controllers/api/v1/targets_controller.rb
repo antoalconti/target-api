@@ -8,6 +8,7 @@ module Api
       def create
         @target = current_user.targets.create!(target_params)
         @target_matches = TargetMatchingService.new(@target).matches
+        ChatGeneratorService.new(current_user, @target_matches).create
         render :show, status: :created
       end
 

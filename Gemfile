@@ -30,6 +30,7 @@ gem 'geokit-rails', '~> 2.3', '>= 2.3.1'
 gem 'jbuilder', '~> 2.9', '>= 2.9.1'
 
 group :test do
+  gem 'action-cable-testing', '~> 0.3.1'
   gem 'addressable', '~> 2.7'
   gem 'rspec-json_expectations', '~> 2.2'
   gem 'shoulda-matchers', '~> 4.1', '>= 4.1.2'

@@ -1,6 +1,8 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    action-cable-testing (0.3.4)
+      actioncable (~> 5.0)
     actioncable (5.2.3)
       actionpack (= 5.2.3)
       nio4r (~> 2.0)
@@ -206,6 +208,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  action-cable-testing (~> 0.3.1)
   addressable (~> 2.7)
   bootsnap (>= 1.1.0)
   byebug
