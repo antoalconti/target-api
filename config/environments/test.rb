@@ -43,4 +43,16 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  config.action_mailer.default_url_options = { host: ENV['MAILER_HOST'] }
+  config.action_mailer.default charset: 'utf-8'
+  config.action_mailer.smtp_settings = {
+    enable_starttls_auto: true,
+    address: 'smtp.sendgrid.net',
+    port: 25,
+    domain: 'rootstrap.com',
+    authentication: :login,
+    user_name: ENV['SENDGRID_USERNAME'],
+    password: ENV['SENDGRID_PASSWORD']
+  }
 end
