@@ -13,3 +13,8 @@ en:
       message:
         errors:
           chat_different_users: 'User must be the one of chat users'
+    channels:
+        room_channel:
+          errors:
+            no_chat_id: 'No Chat-Id!'
+            no_message: 'No message!'

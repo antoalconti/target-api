@@ -7,6 +7,7 @@ module Api
 
       def show
         @chat = Chat.find(params[:id])
+        @chat.clean_unread_messages(current_user)
       end
     end
   end

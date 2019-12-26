@@ -8,6 +8,14 @@ class Chat < ApplicationRecord
   end
 
   def unread_messages_count(user)
-    messages.where(seen: false).where.not(user: user).count
+    messages.unread_for(user).count
+  end
+
+  def clean_unread_messages(user)
+    messages.unread_for(user).update_all(seen: true)
+  end
+
+  def other_user(user)
+    user == user_a ? user_b : user_a
   end
 end
