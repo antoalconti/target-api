@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe RoomChannel, type: :channel do
-  let(:user) { create(:user) }
+  let!(:user) { create(:user) }
   let!(:chat) { create(:chat, user_a: user) }
 
-  before { stub_connection user_id: user.id }
+  before { stub_connection current_user: user }
 
   it 'subscribes to the room' do
     subscribe(room_id: chat.id)
@@ -12,8 +12,7 @@ RSpec.describe RoomChannel, type: :channel do
   end
 
   it 'is rejected when no params id' do
-    subscribe
-    expect(subscription).to be_rejected
+    expect { subscribe }.to raise_error('No Chat-Id!')
   end
 
   it 'subscribes to a stream when room id is provided' do

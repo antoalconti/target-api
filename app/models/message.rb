@@ -5,6 +5,8 @@ class Message < ApplicationRecord
   validates :text, presence: true
   validate :user_belongs_to_chat, on: :create
 
+  scope :unread_for, ->(user) { where(seen: false).where.not(user_id: user.id) }
+
   private
 
   def user_belongs_to_chat
