@@ -1,0 +1,4 @@
+delete_targets_job:
+  cron: "* * * * 0"
+  class: "HardWorker"
+  

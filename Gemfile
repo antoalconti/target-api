@@ -28,11 +28,15 @@ gem 'devise', '~> 4.7', '>= 4.7.1'
 gem 'devise_token_auth', '~> 1.1', '>= 1.1.3'
 gem 'geokit-rails', '~> 2.3', '>= 2.3.1'
 gem 'jbuilder', '~> 2.9', '>= 2.9.1'
+gem 'redis', '~> 4.1', '>= 4.1.3'
+gem 'sidekiq', '~> 6.0', '>= 6.0.4'
+gem 'sidekiq-cron', '~> 1.1'
 
 group :test do
   gem 'action-cable-testing', '~> 0.3.1'
   gem 'addressable', '~> 2.7'
   gem 'rspec-json_expectations', '~> 2.2'
+  gem 'rspec-sidekiq', '~> 3.0.1'
   gem 'shoulda-matchers', '~> 4.1', '>= 4.1.2'
 end
 
