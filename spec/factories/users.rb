@@ -8,6 +8,7 @@ FactoryBot.define do
     provider                { 'email' }
     uid                     { email }
     confirmed_at            { Time.zone.now }
+    avatar { Rack::Test::UploadedFile.new('spec/fixtures/download.jpeg', 'image/jpeg') }
 
     trait :not_confirmed do
       confirmed_at { nil }

@@ -15,10 +15,8 @@ RSpec.describe 'POST /api/v1/users', type: :request do
       expect(json).to include_json(
         user: {
           email: user_params[:user][:email],
-          provider: user_params[:user][:provider],
           full_name: user_params[:user][:full_name],
-          gender: user_params[:user][:gender],
-          uid: user_params[:user][:uid]
+          gender: user_params[:user][:gender]
         }
       )
     end

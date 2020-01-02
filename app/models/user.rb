@@ -6,6 +6,7 @@ class User < ApplicationRecord
   include DeviseTokenAuth::Concerns::User
 
   has_many :targets, dependent: :destroy
+  has_one_attached :avatar
 
   enum gender: { female: 0, male: 1 }
 

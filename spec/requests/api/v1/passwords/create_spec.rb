@@ -41,7 +41,7 @@ RSpec.describe 'POST /api/v1/users/password', type: :request do
     it 'returns the error message' do
       subject
       message = I18n.t('devise_token_auth.passwords.user_not_found', params { :email })
-      expect(json).to include_json(errors: [message])
+      expect(json).to include_json(error: message)
     end
 
     it 'returns a not found status' do
