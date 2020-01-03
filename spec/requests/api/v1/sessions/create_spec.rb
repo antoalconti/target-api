@@ -56,7 +56,7 @@ RSpec.describe 'POST /api/v1/users/sign_in', type: :request do
     it 'returns the error message' do
       subject
       error_msg = I18n.t('devise_token_auth.sessions.bad_credentials')
-      expect(json).to include_json(errors: [error_msg])
+      expect(json).to include_json(error: error_msg)
     end
 
     it 'returns a unauthorized status' do
@@ -81,7 +81,7 @@ RSpec.describe 'POST /api/v1/users/sign_in', type: :request do
       subject
       email = user_not_confirmed.email
       error_msg = I18n.t('devise_token_auth.sessions.not_confirmed', email: email)
-      expect(json).to include_json(errors: [error_msg])
+      expect(json).to include_json(error: error_msg)
     end
 
     it 'returns a unauthorized status' do

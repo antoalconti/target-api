@@ -26,6 +26,7 @@ gem 'puma', '~> 3.12'
 gem 'bootsnap', '>= 1.1.0', require: false
 gem 'devise', '~> 4.7', '>= 4.7.1'
 gem 'devise_token_auth', '~> 1.1', '>= 1.1.3'
+gem 'figaro', '~> 1.1', '>= 1.1.1'
 gem 'geokit-rails', '~> 2.3', '>= 2.3.1'
 gem 'jbuilder', '~> 2.9', '>= 2.9.1'
 gem 'redis', '~> 4.1', '>= 4.1.3'
@@ -45,7 +46,6 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
   gem 'faker', '~> 2.0'
-  gem 'figaro'
   gem 'rspec-rails'
   gem 'rubocop-rails', '~> 2.3', '>= 2.3.2'
 end

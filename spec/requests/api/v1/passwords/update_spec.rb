@@ -56,7 +56,7 @@ RSpec.describe 'PATCH /api/v1/users/password', type: :request do
 
       it 'returns the error messages as a json' do
         subject
-        expect(json).to include_json(errors: ['Unauthorized'])
+        expect(json).to include_json(error: 'Unauthorized')
       end
 
       it 'returns a unauthorized status' do
@@ -75,7 +75,7 @@ RSpec.describe 'PATCH /api/v1/users/password', type: :request do
       it 'returns the error messages as a json' do
         subject
         message = I18n.t('devise_token_auth.passwords.missing_passwords')
-        expect(json).to include_json(errors: [message])
+        expect(json).to include_json(error: message)
       end
 
       it 'returns a unprocessable entity status' do
