@@ -9,6 +9,7 @@ module Api
       private
 
       def sign_up_params
+        byebug
         params.require(:user).permit(:email, :password, :password_confirmation,
                                      :gender, :full_name)
       end
