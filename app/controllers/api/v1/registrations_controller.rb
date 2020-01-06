@@ -1,15 +1,14 @@
 module Api
   module V1
     class RegistrationsController < DeviseTokenAuth::RegistrationsController
+      protect_from_forgery with: :exception
       include Api::Concerns::ActAsApiRequest
       skip_before_action :check_json_request, on: :update
       before_action :check_form_or_json_request, on: :update
-      protect_from_forgery with: :exception
 
       private
 
       def sign_up_params
-        byebug
         params.require(:user).permit(:email, :password, :password_confirmation,
                                      :gender, :full_name)
       end

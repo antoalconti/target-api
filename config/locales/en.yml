@@ -13,8 +13,16 @@ en:
       message:
         errors:
           chat_different_users: 'User must be the one of chat users'
+    admin:
+      topic:
+        topic_dashboard: 'Topics'
+      user:
+        user_dashboard: 'Users'
+      target:
+        target_dashboard: 'Targets'          
     channels:
         room_channel:
           errors:
             no_chat_id: 'No Chat-Id!'
             no_message: 'No message!'
+            topic_dashboard: 'Topics'
