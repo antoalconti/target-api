@@ -13,13 +13,17 @@ en:
       message:
         errors:
           chat_different_users: 'User must be the one of chat users'
+      site_info:
+        no_info: 'There is not info this site yet.'         
     admin:
       topic:
         topic_dashboard: 'Topics'
       user:
         user_dashboard: 'Users'
       target:
-        target_dashboard: 'Targets'          
+        target_dashboard: 'Targets'
+      site_info:
+        site_info_dashboard: 'About section'     
     channels:
         room_channel:
           errors:

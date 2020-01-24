@@ -14,6 +14,9 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :targets, only: %i[create show index destroy new]
       resources :chats, only: %i[show index]
+      resources :site_infos, only: %i[] do
+        get :info, on: :collection
+      end
     end
   end
 end
