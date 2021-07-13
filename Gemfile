@@ -36,7 +36,7 @@ gem 'sidekiq-cron', '~> 1.1'
 
 group :test do
   gem 'action-cable-testing', '~> 0.3.1'
-  gem 'addressable', '~> 2.7'
+  gem 'addressable', '~> 2.8'
   gem 'rspec-json_expectations', '~> 2.2'
   gem 'rspec-sidekiq', '~> 3.0.1'
   gem 'shoulda-matchers', '~> 4.1', '>= 4.1.2'
